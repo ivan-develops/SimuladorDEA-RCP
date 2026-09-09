@@ -4,8 +4,6 @@
 
 Componente interactivo construido con IA, en React (AEDSimulator.jsx) que implementa un simulador educativo de RCP (Reanimación Cardiopulmonar) y uso de DEA (Desfibrilador Externo Automático) para la plataforma de educación virtual del Politécnico Internacional.
 
-Sí, puedo editarlo y modificarlo completamente según las características o cambios que necesites.
-
 ¿De qué se trata el simulador?
 
 Contiene toda la lógica, interfaz y mecánicas de una práctica médica simulada paso a paso:
