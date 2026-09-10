@@ -88,8 +88,25 @@
   function markCompleted() {
     if (completed) return;
     completed = true;
+
+    var scoreEl = document.querySelector("[data-scorm-score]");
+    var rawScore = scoreEl ? scoreEl.getAttribute("data-scorm-score") : null;
+    var evalMode = scoreEl && scoreEl.getAttribute("data-scorm-mode") === "evaluation";
+
     setValue("cmi.core.lesson_status", "completed", "cmi.completion_status", "completed");
-    // SCORM 2004 además distingue "success_status"; en 1.2 no hay campo equivalente separado.
+
+    if (rawScore !== null && !isNaN(parseFloat(rawScore))) {
+      setValue("cmi.core.score.raw", rawScore, "cmi.score.raw", rawScore);
+      setValue("cmi.core.score.min", "0", "cmi.score.min", "0");
+      setValue("cmi.core.score.max", "100", "cmi.score.max", "100");
+      // SCORM 2004 además admite success_status; solo lo reportamos en modo Evaluación,
+      // ya que en Aprendizaje/Práctica la nota es informativa, no un intento calificado.
+      if (evalMode) {
+        setValue("cmi.core.lesson_status", parseFloat(rawScore) >= 80 ? "passed" : "failed",
+                  "cmi.success_status", parseFloat(rawScore) >= 80 ? "passed" : "failed");
+      }
+    }
+
     setValue("cmi.core.exit", "", "cmi.exit", "");
     commit();
   }
